@@ -64,5 +64,4 @@ class QDrantSaver:
         if collection.status != CollectionStatus.Active:
             client.activate_collection(collection_name)
         client.insert(collection_name, [vector], [id], [{**metadata, "title": title, "link": link}])
-
-
+        return (f"Saved {title} to {collection_name}",)
