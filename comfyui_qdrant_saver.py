@@ -1,5 +1,6 @@
 from qdrant_client import QdrantClient
-from qdrant_client.http.models import CollectionStatus
+from qdrant_client.http.models import CollectionStatus, PointStruct
+
 
 class QDrantSaver:
     RETURN_TYPES = ("STRING",)  # Đặt RETURN_TYPES thành thuộc tính lớp
@@ -46,5 +47,6 @@ class QDrantSaver:
         collection = client.get_collection(collection_name)
         if collection.status != CollectionStatus.Active:
             client.activate_collection(collection_name)
-        client.insert(collection_name, [vector], [id], [{**metadata, "title": title, "link": link}])
+        _point = PointStruct(id=id, vector=vector, payload={**metadata, "title": title, "link": link})
+        client.insert(collection_name, [_point])
         return (f"Saved {title} to {collection_name}",)
