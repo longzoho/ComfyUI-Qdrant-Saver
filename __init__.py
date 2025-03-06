@@ -1,4 +1,4 @@
-from comfyui_qdrant_saver import QDrantSaver
+from .comfyui_qdrant_saver import QDrantSaver
 
 NODE_CLASS_MAPPINGS = {
     "QDrantSaver": QDrantSaver
