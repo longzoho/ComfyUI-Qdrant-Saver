@@ -1,8 +1,11 @@
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import CollectionStatus
 
-
 class QDrantSaver:
+    RETURN_TYPES = ("STRING",)  # Đặt RETURN_TYPES thành thuộc tính lớp
+    FUNCTION = "save"
+    CATEGORY = "QDrant"
+
     def __init__(self):
         pass
 
@@ -16,12 +19,12 @@ class QDrantSaver:
                 "vector": ("VECTOR",),
                 "metadata": ("CONDITIONING",),
                 "qdrant_endpoint": ("STRING", {
-                    "multiline": False,  # True if you want the field to look like the one on the ClipTextEncode node
+                    "multiline": False,
                     "default": "http://localhost:6333",
                     "lazy": True
                 }),
                 "collection_name": ("STRING", {
-                    "multiline": False,  # True if you want the field to look like the one on the ClipTextEncode node
+                    "multiline": False,
                     "default": "default_collection",
                     "lazy": True
                 }),
@@ -29,27 +32,7 @@ class QDrantSaver:
             },
         }
 
-        RETURN_TYPES = ("STRING",)
-        # RETURN_NAMES = ("image_output_name",)
-
-        FUNCTION = "save"
-
-        # OUTPUT_NODE = False
-
-        CATEGORY = "QDrant"
-
     def check_lazy_status(self, qdrant_endpoint, print_to_screen):
-        """
-            Return a list of input names that need to be evaluated.
-
-            This function will be called if there are any lazy inputs which have not yet been
-            evaluated. As long as you return at least one field which has not yet been evaluated
-            (and more exist), this function will be called again once the value of the requested
-            field is available.
-
-            Any evaluated inputs will be passed as arguments to this function. Any unevaluated
-            inputs will have the value None.
-        """
         if print_to_screen == "enable":
             return ["qdrant_endpoint", "collection_name"]
         else:
