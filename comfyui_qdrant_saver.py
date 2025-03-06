@@ -36,7 +36,7 @@ class QDrantSaver:
 
         # OUTPUT_NODE = False
 
-        CATEGORY = "Example"
+        CATEGORY = "QDrant"
 
     def check_lazy_status(self, qdrant_endpoint, print_to_screen):
         """
@@ -66,13 +66,3 @@ class QDrantSaver:
         client.insert(collection_name, [vector], [id], [{**metadata, "title": title, "link": link}])
 
 
-# A dictionary that contains all nodes you want to export with their names
-# NOTE: names should be globally unique
-NODE_CLASS_MAPPINGS = {
-    "QDrantSaver": QDrantSaver
-}
-
-# A dictionary that contains the friendly/humanly readable titles for the nodes
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "QDrantSaver": "QDrant Saver Node"
-}
