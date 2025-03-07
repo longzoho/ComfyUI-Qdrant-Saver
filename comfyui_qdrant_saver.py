@@ -18,6 +18,7 @@ class QDrantSaver:
                 "title": ("CONDITIONING",),
                 "link": ("CONDITIONING",),
                 "vector": ("VECTOR",),
+                "markdown": ("CONDITIONING",),
                 "metadata": ("CONDITIONING",),
                 "qdrant_endpoint": ("STRING", {
                     "multiline": False,
@@ -39,7 +40,7 @@ class QDrantSaver:
         else:
             return []
 
-    def save(self, id, title, link, vector, metadata, qdrant_endpoint, collection_name, print_to_screen):
+    def save(self, id, title, link, vector, markdown, metadata, qdrant_endpoint, collection_name, print_to_screen):
         client = QdrantClient(qdrant_endpoint)
         collections = client.get_collections()
         if not any(collection_name == c.name for c in collections.collections):
@@ -47,6 +48,6 @@ class QDrantSaver:
         collection = client.get_collection(collection_name)
         if collection.status != CollectionStatus.Active:
             client.activate_collection(collection_name)
-        _point = PointStruct(id=id, vector=vector, payload={**metadata, "title": title, "link": link})
+        _point = PointStruct(id=id, vector=vector, payload={**metadata, "title": title, "link": link, "markdown": markdown})
         client.insert(collection_name, [_point])
         return (f"Saved {title} to {collection_name}",)
